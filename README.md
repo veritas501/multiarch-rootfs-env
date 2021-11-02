@@ -2,7 +2,11 @@
 
 *Build debug rootfs with one cmdline.*
 
+With lots of binary inbuilt: gdbserver, socat, netcat, dropbear, vim, nano, etc ...
+
 ## Usage
+
+1. Build by yourself
 
 ```
 $ ./start_build.sh
@@ -38,3 +42,12 @@ $ ./start_build.sh armhf_le
 $ ls
 armhf_le.tar.gz
 ```
+
+2. Build by github workflow
+
+Fork this repo, 
+goto github->Actions->All workflows->Build->Run workflow,
+input target architecture (armhf_le for example),
+click Run workflow,
+wait for around one hour,
+get build result from Artifacts.
