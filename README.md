@@ -26,3 +26,15 @@ build_targets: (le: little_endian, be: big_endian)
 * mips32r6el
 * armhf_le
 ```
+
+for example, I want to build armhf_le rootfs:
+```
+$ ./start_build.sh armhf_le
+< some output ...>
+< ... >
+< ... >
+[+] Build result is at xxx/armhf_le.tar.gz
+
+$ ls
+armhf_le.tar.gz
+```

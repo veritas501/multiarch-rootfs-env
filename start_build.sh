@@ -70,7 +70,7 @@ get_build_result()
     if [ ! -f "${MAIN_PWD}/${target}.tar.gz" ]; then
         echo "[-] Oops, build result not found"
     else
-        echo "[*] Build result is at ${MAIN_PWD}/${target}.tar.gz"
+        echo "[+] Build result is at ${MAIN_PWD}/${target}.tar.gz"
     fi
     popd
 }
