@@ -24,7 +24,7 @@ jobs:
     - name: Installing dependencies
       run: |
         sudo apt-get -y update
-        sudo apt install -y gcc g++ make binutils build-essential patch curl
+        sudo apt install -y gcc g++ make binutils build-essential patch curl qemu-utils
         sudo apt install -y gzip bzip2 perl tar cpio unzip rsync file bc wget
 
     - name: Build

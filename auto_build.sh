@@ -34,6 +34,9 @@ get_buildroot()
     if [ ! -f "$BUILDROOT_TARBALL" ]; then
         wget "$BUILDROOT_URL" -O "$BUILDROOT_TARBALL"
     fi
+    if [ -d "$BUILDROOT_DIR" ]; then
+        rm -rf "$BUILDROOT_DIR"
+    fi
     mkdir -p "$BUILDROOT_DIR"
     tar xf "$BUILDROOT_TARBALL" -C "$BUILDROOT_DIR" --strip-components=1
     popd
