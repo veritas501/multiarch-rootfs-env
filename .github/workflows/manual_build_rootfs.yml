@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'target architecture (see auto_build.sh to get some hints)'     
+        required: true
+
+jobs:
+  Linux:
+    runs-on: ubuntu-20.04
+    name: rootfs_${{ github.event.inputs.target }}
+    env: BUILD_TARGET: ${{ github.event.inputs.target }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+        submodules: recursive
+
+    - name: Installing dependencies
+      run: |
+        sudo apt-get -y update
+        sudo apt install -y gcc g++ make binutils build-essential patch curl
+        sudo apt install -y gzip bzip2 perl tar cpio unzip rsync file bc wget
+
+    - name: Build
+      run: ${{ github.workspace }}/auto_build.sh ${{ env.BUILD_TARGET }}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: rootfs_${{ env.BUILD_TARGET }}
+        path: ${{github.workspace}}/${{ env.BUILD_TARGET }}.tar.gz

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAIN_PWD="$PWD"
+MAIN_PWD=$(dirname $(readlink -f $0))
 
 BUILDROOT_VERSION="2021.08.1"
 BUILDROOT_URL="https://buildroot.org/downloads/buildroot-${BUILDROOT_VERSION}.tar.gz"
