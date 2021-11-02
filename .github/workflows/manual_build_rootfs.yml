@@ -11,7 +11,8 @@ jobs:
   Linux:
     runs-on: ubuntu-20.04
     name: rootfs_${{ github.event.inputs.target }}
-    env: BUILD_TARGET: ${{ github.event.inputs.target }}
+    env: 
+      BUILD_TARGET: ${{ github.event.inputs.target }}
 
     steps:
     - name: Checkout
