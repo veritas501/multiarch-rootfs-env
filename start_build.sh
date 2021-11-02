@@ -25,6 +25,8 @@ BUILD_TARGET=(
     ["riscv32"]="qemu_riscv32_virt_defconfig"
     ["riscv64"]="qemu_riscv64_virt_defconfig"
     ["s390x"]="qemu_s390x_defconfig"
+    ["x86"]="qemu_x86_defconfig"
+    ["x86_64"]="qemu_x86_64_defconfig"
 )
 
 # download buildroot and extract
@@ -58,9 +60,17 @@ run_buildroot()
     popd
 }
 
+pre_get_result()
+{
+    if [ $target == "ppc" ]; then
+        cp "${MAIN_PWD}/assets/openbios-ppc" "openbios-ppc"
+    fi
+}
+
 get_build_result()
 {
     pushd "${MAIN_PWD}/${BUILDROOT_DIR}/output/images"
+    pre_get_result
     [ -f rootfs.ext3 ] || (echo "[-] Can't found rootfs.ext3"; exit 1)
     qemu-img convert -f raw -O qcow2 rootfs.ext3 rootfs.qcow2 || exit 1
     rm -f *.sh *.ext*
