@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'target architecture (see auto_build.sh to get some hints)'     
+        description: 'target architecture (see start_build.sh to get some hints)'     
         required: true
 
 jobs:
@@ -28,10 +28,10 @@ jobs:
         sudo apt install -y gzip bzip2 perl tar cpio unzip rsync file bc wget
 
     - name: Build
-      run: ${{ github.workspace }}/auto_build.sh ${{ env.BUILD_TARGET }}
+      run: ${{ github.workspace }}/start_build.sh ${{ env.BUILD_TARGET }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
         name: rootfs_${{ env.BUILD_TARGET }}
-        path: ${{github.workspace}}/${{ env.BUILD_TARGET }}.tar.gz
+        path: ${{ github.workspace }}/${{ env.BUILD_TARGET }}.tar.gz

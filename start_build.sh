@@ -64,16 +64,21 @@ get_build_result()
     [ -f rootfs.ext3 ] || (echo "[-] Can't found rootfs.ext3"; exit 1)
     qemu-img convert -f raw -O qcow2 rootfs.ext3 rootfs.qcow2 || exit 1
     rm -f *.sh *.ext*
-    cp "${MAIN_PWD}/run_script/${target}.sh" "run.sh"
+    cp "${MAIN_PWD}/boot_scripts/${target}.sh" "run.sh"
     tar czf "${target}.tar.gz" *
     mv "${target}.tar.gz" "${MAIN_PWD}"
+    if [ ! -f "${MAIN_PWD}/${target}.tar.gz" ]; then
+        echo "[-] Oops, build result not found"
+    else
+        echo "[*] Build result is at ${MAIN_PWD}/${target}.tar.gz"
+    fi
     popd
 }
 
 # print help information
 help()
 {
-    echo "usage: auto_build.sh <build_target>"
+    echo "usage: start_build.sh <build_target>"
     echo ""
     echo "build_targets: (le: little_endian, be: big_endian)"
     for k in ${!BUILD_TARGET[@]}; do
