@@ -11,6 +11,20 @@ declare -A BUILD_TARGET
 BUILD_TARGET=(
     ["aarch64_le"]="qemu_aarch64_virt_defconfig"
     ["armhf_le"]="qemu_arm_vexpress_defconfig"
+    ["mips32r2"]="qemu_mips32r2_malta_defconfig"
+    ["mips32r2el"]="qemu_mips32r2el_malta_defconfig"
+    ["mips32r6"]="qemu_mips32r6_malta_defconfig"
+    ["mips32r6el"]="qemu_mips32r6el_malta_defconfig"
+    ["mips64"]="qemu_mips64_malta_defconfig"
+    ["mips64el"]="qemu_mips64el_malta_defconfig"
+    ["mips64r6"]="qemu_mips64r6_malta_defconfig"
+    ["mips64r6el"]="qemu_mips64r6el_malta_defconfig"
+    ["ppc"]="qemu_ppc_mac99_defconfig"
+    ["ppc64"]="qemu_ppc64_pseries_defconfig"
+    ["ppc64_le"]="qemu_ppc64le_pseries_defconfig"
+    ["riscv32"]="qemu_riscv32_virt_defconfig"
+    ["riscv64"]="qemu_riscv64_virt_defconfig"
+    ["s390x"]="qemu_s390x_defconfig"
 )
 
 # download buildroot and extract
