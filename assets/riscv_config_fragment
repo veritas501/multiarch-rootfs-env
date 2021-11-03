@@ -1,0 +1,2 @@
+# musl is still buggy on riscv32/riscv64
+BR2_TOOLCHAIN_BUILDROOT_GLIBC=y

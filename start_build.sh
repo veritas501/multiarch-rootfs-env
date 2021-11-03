@@ -29,12 +29,18 @@ BUILD_TARGET=(
     ["x86_64"]="qemu_x86_64_defconfig"
 )
 
+wget_fail_clean(){
+    echo "[-] wget failed"
+    rm -rf "$BUILDROOT_TARBALL"
+    exit 1
+}
+
 # download buildroot and extract
 get_buildroot()
 {
     pushd "${MAIN_PWD}"
     if [ ! -f "$BUILDROOT_TARBALL" ]; then
-        wget "$BUILDROOT_URL" -O "$BUILDROOT_TARBALL"
+        wget "$BUILDROOT_URL" -O "$BUILDROOT_TARBALL"  || wget_fail_clean
     fi
     if [ -d "$BUILDROOT_DIR" ]; then
         rm -rf "$BUILDROOT_DIR"
@@ -44,12 +50,23 @@ get_buildroot()
     popd
 }
 
+post_gen_config()
+{
+    if [[ $target == "riscv32" ||  $target == "riscv64" ]]; then
+	./support/kconfig/merge_config.sh .config "${MAIN_PWD}/assets/riscv_config_fragment" || exit 1
+    fi
+    if [[ $target == "x86" ||  $target == "x86_64" ]]; then
+        ./support/kconfig/merge_config.sh .config "${MAIN_PWD}/assets/x86_config_fragment" || exit 1
+    fi
+}
+
 # generate .config
 gen_config()
 {
     pushd "${MAIN_PWD}/${BUILDROOT_DIR}"
     make "$build_target" || exit 1
-    ./support/kconfig/merge_config.sh .config "${MAIN_PWD}/config_fragment" || exit 1
+    ./support/kconfig/merge_config.sh .config "${MAIN_PWD}/assets/common_config_fragment" || exit 1
+    post_gen_config
     popd
 }
 
@@ -74,7 +91,7 @@ get_build_result()
     [ -f rootfs.ext3 ] || (echo "[-] Can't found rootfs.ext3"; exit 1)
     qemu-img convert -f raw -O qcow2 rootfs.ext3 rootfs.qcow2 || exit 1
     rm -f *.sh *.ext*
-    cp "${MAIN_PWD}/boot_scripts/${target}.sh" "run.sh"
+    cp "${MAIN_PWD}/assets/boot_scripts/${target}.sh" "run.sh"
     tar czf "${target}.tar.gz" *
     mv "${target}.tar.gz" "${MAIN_PWD}"
     if [ ! -f "${MAIN_PWD}/${target}.tar.gz" ]; then

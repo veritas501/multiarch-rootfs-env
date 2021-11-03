@@ -1,0 +1,5 @@
+# linux kernel 5.10 can't compiled with 2.36 binutils
+BR2_BINUTILS_VERSION_2_35_X=y
+
+# x86_64 always use glibc
+BR2_TOOLCHAIN_BUILDROOT_GLIBC=y
