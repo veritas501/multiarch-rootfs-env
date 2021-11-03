@@ -4,6 +4,8 @@
 
 With lots of binary inbuilt: gdbserver, socat, netcat, dropbear, vim, nano, etc ...
 
+account/password: root/root
+
 ## Usage
 
 1. Build by yourself
@@ -56,3 +58,12 @@ click Run workflow,
 wait for around one hour,
 
 get build result from Artifacts.
+
+## Known problem
+
+- riscv32:
+  - strace is not supported
+  - htop is not supported because btime is not found in /proc/stat (maybe fixable)
+
+- riscv64:
+  - htop is not supported because btime is not found in /proc/stat (maybe fixable)
