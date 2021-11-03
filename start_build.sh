@@ -58,6 +58,9 @@ post_gen_config()
     if [[ $target == "x86" ||  $target == "x86_64" ]]; then
         ./support/kconfig/merge_config.sh .config "${MAIN_PWD}/assets/x86_config_fragment" || exit 1
     fi
+    if [[ $target == "s390x" ]]; then
+        ./support/kconfig/merge_config.sh .config "${MAIN_PWD}/assets/s390x_config_fragment" || exit 1
+    fi
 }
 
 # generate .config
